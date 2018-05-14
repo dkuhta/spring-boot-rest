@@ -1,24 +1,27 @@
 package ch.loyalty.amopp.ip;
 
-import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class MainController {
 
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
+    @Value("${version}")
+    private String version;
 
-    @RequestMapping("/version")
+    @RequestMapping(value = "/version", method = RequestMethod.GET)
     public VersionDto version(@RequestParam(value="name", defaultValue="World") String name) {
-        return new VersionDto("1.0");
+        return new VersionDto(version);
     }
 
-    @RequestMapping("/greeting")
-    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        return new Greeting(counter.incrementAndGet(),
-                            String.format(template, name));
+    @RequestMapping(value = "/execute", method = RequestMethod.POST)
+    public ResponseDto greeting(@RequestBody RequestDto requestDto) {
+        return new ResponseDto();
     }
 }
