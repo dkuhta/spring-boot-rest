@@ -1,4 +1,4 @@
-package hello;
+package ch.loyalty.amopp.ip;
 
 public class Greeting {
 
