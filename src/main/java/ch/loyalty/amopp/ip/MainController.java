@@ -12,9 +12,8 @@ public class MainController {
     private final AtomicLong counter = new AtomicLong();
 
     @RequestMapping("/version")
-    public Greeting version(@RequestParam(value="name", defaultValue="World") String name) {
-        return new Greeting(counter.incrementAndGet(),
-                String.format(template, name));
+    public VersionDto version(@RequestParam(value="name", defaultValue="World") String name) {
+        return new VersionDto("1.0");
     }
 
     @RequestMapping("/greeting")
