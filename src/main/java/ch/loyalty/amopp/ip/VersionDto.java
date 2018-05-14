@@ -17,4 +17,12 @@ public class VersionDto implements Serializable {
     public VersionDto(final String version) {
         this.version = version;
     }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(final String version) {
+        this.version = version;
+    }
 }
