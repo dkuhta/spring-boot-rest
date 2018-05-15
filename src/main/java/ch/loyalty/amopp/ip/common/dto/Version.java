@@ -1,4 +1,4 @@
-package ch.loyalty.amopp.ip;
+package ch.loyalty.amopp.ip.common.dto;
 
 import java.io.Serializable;
 
@@ -8,13 +8,13 @@ import java.io.Serializable;
  * @author Denis Kuhta
  * @since JDK1.8
  */
-public class VersionDto implements Serializable {
+public class Version implements Serializable {
 
     private static final long serialVersionUID = 817666042685205434L;
 
     private String version;
 
-    public VersionDto(final String version) {
+    public Version(final String version) {
         this.version = version;
     }
 
