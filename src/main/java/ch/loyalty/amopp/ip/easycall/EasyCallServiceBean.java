@@ -64,4 +64,9 @@ public class EasyCallServiceBean extends AbstractEasyCallService implements IPPr
     public Set<TransType> getSupportedTransactionTypes() {
         return SUPPORTED_TRANSACTION;
     }
+
+    @Override
+    public String buildReceipt(IPRequest ipRequest, IPResponse ipResponse, String textFromLibrary) {
+        return textFromLibrary;
+    }
 }

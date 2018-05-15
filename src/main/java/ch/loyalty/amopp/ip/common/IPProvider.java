@@ -15,4 +15,6 @@ public interface IPProvider {
     IPResponse execute(IPRequest transaction, Integer timeout);
 
     Set<TransType> getSupportedTransactionTypes();
+
+    String buildReceipt(IPRequest ipRequest, IPResponse ipResponse, String textFromLibrary);
 }
