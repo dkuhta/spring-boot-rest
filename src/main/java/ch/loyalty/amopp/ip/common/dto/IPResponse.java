@@ -28,4 +28,11 @@ public class IPResponse {
     private String exceptionMessage;
     private IPConnection ipConnection;
     private Long maxBalance;
+
+    public IPResponse() {
+    }
+
+    public IPResponse(final IPStatus ipStatus) {
+        this.ipStatus = ipStatus;
+    }
 }

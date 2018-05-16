@@ -39,6 +39,6 @@ public class MainController {
 
     @RequestMapping(value = "/execute", method = RequestMethod.POST)
     public IPResponse greeting(@RequestBody IPRequest ipRequest) {
-        return new IPResponse();
+        return ipProvider.execute(ipRequest);
     }
 }

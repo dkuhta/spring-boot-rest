@@ -51,12 +51,11 @@ public class EasyCallServiceBean extends AbstractEasyCallService implements IPPr
     }
 
     @Override
-    public IPResponse execute(final IPRequest ipRequest, final Integer timeout) {
+    public IPResponse execute(final IPRequest ipRequest) {
         try {
-            return assembler.assemble(execute(assembler.assemble(ipRequest), timeout), ipRequest);
+            return assembler.assemble(execute(assembler.assemble(ipRequest), ipRequest.getTimeout()), ipRequest);
         } catch (IPException e) {
-            //TODO handle error and build response
-            return null;
+            return new IPResponse(e.getIpStatus());
         }
     }
 

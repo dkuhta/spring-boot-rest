@@ -1,8 +1,9 @@
 package ch.loyalty.amopp.ip.easycall;
 
-import ch.loyalty.amopp.ip.common.exceptions.IPError;
+import ch.loyalty.amopp.ip.common.dto.IPStatus;
 import ch.loyalty.amopp.ip.common.exceptions.IPException;
 import ch.loyalty.amopp.ip.common.rs.AbstractRestDao;
+import ch.loyalty.amopp.ip.common.rs.Header;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
@@ -24,19 +25,18 @@ public abstract class AbstractEasyCallService extends AbstractRestDao {
 
     private final static Logger LOGGER = LogManager.getLogger(AbstractEasyCallService.class.getName());
 
+    private final static String CONTENT_TYPE = "application/json";
+    private final static String CHARSET = "utf-8";
+
+    private final static String MSG_TIMEOUT_ERROR = "IP service timeout exception.";
+    private final static String MSG_GENERIC_ERROR = "IP processing error.";
+
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     protected abstract String getHost();
 
     protected abstract String getContext();
 
-    /**
-     * Executes HTTP request to EasyCall service
-     *
-     * @param requestDto the request dto
-     * @param timeout    the timeout
-     * @return the response dto
-     */
     public EasyCallResponseDto execute(final EasyCallRequestDto requestDto, final Integer timeout) throws IPException {
         PostMethod postMethod = null;
 
@@ -44,9 +44,9 @@ public abstract class AbstractEasyCallService extends AbstractRestDao {
         try {
             String requestStr = this.objectMapper.writeValueAsString(requestDto);
             postMethod = new PostMethod(getContext());
-            postMethod.addRequestHeader("Content-Type", "application/json");
-            postMethod.addRequestHeader("Accept", "application/json");
-            postMethod.setRequestEntity(new StringRequestEntity(requestStr, "application/json", "utf-8"));
+            postMethod.addRequestHeader(Header.CONTENT_TYPE.getName(), CONTENT_TYPE);
+            postMethod.addRequestHeader(Header.ACCEPT.getName(), CONTENT_TYPE);
+            postMethod.setRequestEntity(new StringRequestEntity(requestStr, CONTENT_TYPE, CHARSET));
 
             LOGGER.info(MessageFormat.format("\nEasyCall request TRANS_ID={0}: \n {1}", requestDto.getReferenzid(), requestStr));
 
@@ -62,10 +62,10 @@ public abstract class AbstractEasyCallService extends AbstractRestDao {
             responseDto = this.objectMapper.readValue(responseStr, EasyCallResponseDto.class);
         } catch (SocketTimeoutException var10) {
             LOGGER.error(var10);
-            throw new IPException(IPError.TIMEOUT, "EasyCall timeout exception.");
+            throw new IPException(IPStatus.TIMEOUT, MSG_TIMEOUT_ERROR);
         } catch (IOException var9) {
             LOGGER.error(var9);
-            throw new IPException(IPError.GENERIC, "EasyCall error.");
+            throw new IPException(IPStatus.FAILURE, MSG_GENERIC_ERROR);
         } finally {
             if (Objects.nonNull(postMethod)) {
                 postMethod.releaseConnection();

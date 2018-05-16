@@ -39,4 +39,6 @@ public class IPRequest {
     private IpMailData partnerMail;
     private Long correctedAmount;
     private String originalTransBusinessType;
+
+    private Integer timeout;
 }

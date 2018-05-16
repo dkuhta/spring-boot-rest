@@ -1,6 +1,9 @@
 package ch.loyalty.amopp.ip.common.exceptions;
 
 
+import ch.loyalty.amopp.ip.common.dto.IPStatus;
+import lombok.Getter;
+
 /**
  * IPException
  *
@@ -12,10 +15,11 @@ public class IPException extends Exception {
 
     private static final long serialVersionUID = -1688997505715567981L;
 
-    private IPError ipError;
+    @Getter
+    private IPStatus ipStatus;
 
-    public IPException(final IPError ipError, final String message) {
+    public IPException(final IPStatus ipStatus, final String message) {
         super(message);
-        this.ipError = ipError;
+        this.ipStatus = ipStatus;
     }
 }

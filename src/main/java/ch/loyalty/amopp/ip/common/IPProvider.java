@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public interface IPProvider {
 
-    IPResponse execute(IPRequest transaction, Integer timeout);
+    IPResponse execute(IPRequest transaction);
 
     Set<TransType> getSupportedTransactionTypes();
 
