@@ -3,6 +3,7 @@ package com.company.model.country;
 import com.company.model.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 
@@ -13,6 +14,7 @@ import javax.persistence.Entity;
  * @since JDK1.8
  */
 @Getter
+@Setter
 @Entity
 public class Country extends BaseEntity {
 
